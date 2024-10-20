@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FirmFtationery" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FirmFtationery;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False" SettingsObjectName="ConsoleApp1.Properties.Settings" SettingsPropertyName="FirmFtationeryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CustomerFirm" Member="CustomerFirm">
+    <Type Name="CustomerFirm">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="CustomerFirm_Sale" Member="Sale" ThisKey="Id" OtherKey="CustomerFirmId" Type="Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Product">
+    <Type Name="Product">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPrice" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Product_Sale" Member="Sale" ThisKey="Id" OtherKey="ProductId" Type="Sale" />
+      <Association Name="Product_Stock" Member="Stock" ThisKey="Id" OtherKey="ProductId" Type="Stock" />
+      <Association Name="ProductType_Product" Member="ProductType" ThisKey="TypeId" OtherKey="Id" Type="ProductType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductType" Member="ProductType">
+    <Type Name="ProductType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="ProductType_Product" Member="Product" ThisKey="Id" OtherKey="TypeId" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sale" Member="Sale">
+    <Type Name="Sale">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerFirmId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ManagerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuantitySold" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SalePrice" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="SaleDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="CustomerFirm_Sale" Member="CustomerFirm" ThisKey="CustomerFirmId" OtherKey="Id" Type="CustomerFirm" IsForeignKey="true" />
+      <Association Name="Product_Sale" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
+      <Association Name="SalesManager_Sale" Member="SalesManager" ThisKey="ManagerId" OtherKey="Id" Type="SalesManager" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalesManager" Member="SalesManager">
+    <Type Name="SalesManager">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="SalesManager_Sale" Member="Sale" ThisKey="Id" OtherKey="ManagerId" Type="Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stock" Member="Stock">
+    <Type Name="Stock">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Product_Stock" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
